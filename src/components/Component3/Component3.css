@@ -1,0 +1,33 @@
+.screen
+{
+    text-align: center;
+}
+.flex-container
+{
+    display: flex;
+    flex-direction: row;
+}
+  
+  .first,.second,.third,.fourth {
+    background-color: #f1f1f1;
+    border: 1px solid gray;
+    text-align: center;
+    line-height: 75px;
+    font-size: 20px;
+    padding: 10px;
+  }
+  .Divum
+  {
+    text-align: center;
+    background-color: black;
+    line-height: 3.1;
+    color: white;
+  }
+  .divum-head
+  {
+    color: white;
+  }
+  .idea 
+  {
+    padding: 10px;
+  }
