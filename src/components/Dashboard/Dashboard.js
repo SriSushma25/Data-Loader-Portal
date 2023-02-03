@@ -1,10 +1,10 @@
-import React, { Component,useState,useEffect } from 'react';
-import { useNavigate,useLocation,Link } from 'react-router-dom';
-import Component1 from '../Component1/Component1';
-import Component2 from '../Component2/Component2';
-import Component3 from '../Component3/Component3';
+import React, { useState,useEffect } from 'react';
+import { useLocation,Link } from 'react-router-dom';
+import Component1 from '../AddPatient/Component1';
+import Component2 from '../Edit/Component2';
+import Component3 from '../ProcessData/Component3';
 import './Dashboard.css';
-import logo from "./logo1.jpg";
+
 
 function Dashboard(){
   const location =useLocation();
@@ -17,7 +17,7 @@ function Dashboard(){
       (element != null && element.contains('show')) ? element.remove('show') : element.add('show');
     }
   }
-  useEffect(()=>{
+  useEffect(()=>{ 
    setCurrentUser(location.state.userName);
   },[]);
 
@@ -35,7 +35,7 @@ function Dashboard(){
   }
 
     return (
-      <React.Fragment>
+      
         <div className="d-flex" id="wrapper">
           <div id="page-content-wrapper">
             <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom" id="nav-bar">
@@ -65,7 +65,7 @@ function Dashboard(){
             </div>
           </div>
         </div>
-      </React.Fragment>
+      
     )
   }
 

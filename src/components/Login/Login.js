@@ -3,39 +3,42 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 function Login() {
-    const navigate=useNavigate();
-    const [username,setUserName] = useState('');
-    const [password,setPassword] = useState('');
-    const [isValid,setISValid] = useState(true);
+    const navigate = useNavigate();
+    const [username, setUserName] = useState('');
+    const [password, setPassword] = useState('');
+    const [isValid, setISValid] = useState(true);
 
     const handleUserInput = (event) => {
         const value = event.target.value;
         const name = event.target.name;
-        if(name==='username'){
-        setUserName(value);
+        if (name === 'username') {
+            setUserName(value);
         }
         else {
             setPassword(value);
         }
         setISValid(true);
     }
-    
+
     const handleLoginDetails = (event) => {
         event.preventDefault();
-        const emailRegex=/^\S+@\S+$/;
-        const passwordRegex=/^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!&$%@&? "]).*$/;
-        if (emailRegex.test(username) && passwordRegex.test(password)) {
+        const emailRegex = /^\S+@\S+$/;
+        const passwordRegex = /^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!&$%@&? "]).*$/;
+        if (emailRegex.test(username) && passwordRegex.test(password)) 
+        {
             setISValid(true);
             navigate('/dashboard',
-                {state: { userName: username }
-            })
-        } else {
+                {
+                    state: { userName: username }
+                })
+        } 
+        else {
             setISValid(false);
         }
     }
-        return (
-            <React.Fragment>
-                <div className="frontpage">
+    return (
+        <React.Fragment>
+            <div className="frontpage">
                 <section className="login-block">
                     <div className="container">
                         <div className="row">
@@ -44,10 +47,10 @@ function Login() {
                                 </div>
                             </div>
                             <div className="col-md-4 login-sec">
-                                <h2 className="text-center">Login Now</h2>
+                                <h2 className="text-center">Data Loader Portal</h2>
                                 <form className="login-form" onSubmit={handleLoginDetails}>
                                     <div className="form-group p-1">
-                                        <label htmlFor="Email" className="text-uppercase">Username</label>
+                                        <label htmlFor="Email" className="text-uppercase">User Name</label>
                                         <input type="email" name="username" className="form-control"
                                             value={username} placeholder="Enter your user name" required
                                             onChange={handleUserInput} />
@@ -69,9 +72,9 @@ function Login() {
                         </div>
                     </div>
                 </section>
-                </div>
-            </React.Fragment>
-        )
-    }
-    
+            </div>
+        </React.Fragment>
+    )
+}
+
 export default Login;
