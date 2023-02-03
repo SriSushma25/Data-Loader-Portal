@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 
 
-import './Component1.css';
+import './addPatient.css';
 const Component1 = () => {
 
     const [name, setName] = useState('');
@@ -12,16 +12,35 @@ const Component1 = () => {
     const [drug, setDrug] = useState('');
     const [drugList, setDrugList] = useState([]);
     const [isValid, setISValid] = useState(true);
+    const [errorData, setErrorData]=useState('');
 
     const handleLoginDetails = (event) => {
         event.preventDefault()
-        console.log(name,address)
         const emailRegex = /^\S+@\S+$/;
         if(emailRegex.test(email) && phone.length===10){
             setISValid(true)
+        
+        const patientValue={
+            name:name,
+            address:address,
+            phone:phone,
+            email:email,
+            drugs:drugList,
+            dob:dob
         }
+        console.log(patientValue);
+    }
         else{
-            setISValid(false)
+            setISValid(false);
+            if(!emailRegex.test(email) && phone.length!==10){
+                alert('Invalid email id and phone no');
+            }
+            else if(!emailRegex.test(email)){
+               alert('Invalid email id,please enter a valid mail id')
+            }
+            else if(phone.length!==10){
+                alert('Invalid phone no,please enter a valid phone no')
+            }
         }
         
 
@@ -55,7 +74,7 @@ const Component1 = () => {
         if(name==='dob'){
             setDob(value)
         }
-        if(name==='phone' && value.length<10){
+        if(name==='phone' && value.length<=10){
             setPhone(value)
         }
     }
@@ -65,31 +84,31 @@ const Component1 = () => {
                 <div className="subhead">
                     <h3><strong>Add Patient</strong></h3>
                 </div> 
-
+<div className="containers">
                 <form className="login-form" onSubmit={handleLoginDetails}>
                                     <div className="form-group p-1">
                                     <div className="form-group p-1">
-                                        <label htmlFor="Email" className="text-uppercase">Email</label>
+                                        <label htmlFor="Email" className="text-uppercase pl-2">Email</label>
                                         <input type="email" name="email" className="form-control"
                                             value={email} placeholder="Enter the mail address" required
                                             onChange={handleUserInput} />
                                     </div>
 
-                                        <label htmlFor="name" className="text-uppercase"> Name</label>
+                                        <label htmlFor="name" className="text-uppercase pl-2"> Name</label>
                                         <input type="text" name="name" className="form-control"
                                             value={name} placeholder="Enter your name" required
                                             onChange={handleUserInput} />
                                     </div>
-                                    <div className = 'd-flex justify-space-between w-100'> 
+                                    <div className = 'd-flex w-100 p-0'> 
                                     <div className="form-group p-1 w-50">
-                                        <label htmlFor="Phone" className="text-uppercase">Phone</label>
+                                        <label htmlFor="Phone" className="text-uppercase pl-2">Phone</label>
                                         <input type="number" name="phone" className="form-control"
                                             value={phone} placeholder="mobile number" required
                                             onChange={handleUserInput} />
                                     </div>
 
                                     <div className="form-group p-1 w-50">
-                                        <label htmlFor="Dob" className="text-uppercase">DOB</label>
+                                        <label htmlFor="Dob" className="text-uppercase pl-2">DOB</label>
                                         <input type="date" name="dob" className="form-control"
                                             value={dob} placeholder="dob" required
                                             onChange={handleUserInput} />
@@ -97,25 +116,25 @@ const Component1 = () => {
                                     </div>
 
                                     <div className="form-group p-1 ">
-                                        <label htmlFor="address" className="text-uppercase">Address</label>
+                                        <label htmlFor="address" className="text-uppercase pl-2">Address</label>
                                         <textarea name="address" className="form-control" value={address}
                                             placeholder="Enter your address" required
                                             onChange={handleUserInput} />
                                     </div>
 
-                                    <div className = 'd-flex justify-space-between w-100'>
+                                        <label htmlFor="drug" className="text-uppercase p-0">Drug</label>
+                                    <div className = 'd-flex w-100 p-0'>
                                     <div className="form-group p-1 w-50">
-                                        <label htmlFor="drug" className="text-uppercase">Drug</label>
                                         <input type="text" name="drug" className="form-control"
-                                            value={drug} placeholder="Drug name" required
+                                            value={drug} placeholder="Drug name"
                                             onChange={handleUserInput} />
 
-                                        <button className='form-group p-1 w-25' type="button" onClick={onAddClick}>Add</button>
                                     </div>
+                                        <button className='btn btn-primary pt-1 pb-1 pl-4 pr-4 m-1' type="button" onClick={onAddClick}>Add</button>
                                     </div>
 
 
-                                    <div> DRUGS
+                                    <div> DRUG LIST
                                         <ul> {drugList && drugList.length>0 && drugList.map((items,index) => {
                                             
                                             return(<li key={index}>{items}</li>) 
@@ -127,8 +146,7 @@ const Component1 = () => {
                                         <button type="submit" className="btn btn-primary">submit</button>
                                     </div>
                                 </form>
-
-
+                                </div>
             </div>
 
 

@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import { useLocation,Link } from 'react-router-dom';
-import Component1 from '../AddPatient/Component1';
-import Component2 from '../Edit/Component2';
+import Component1 from '../AddPatient/addPatient';
+import Component2 from '../Edit/editPatient';
 import Component3 from '../ProcessData/Component3';
 import './Dashboard.css';
 
