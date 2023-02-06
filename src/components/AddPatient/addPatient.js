@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 
 
 import './addPatient.css';
@@ -13,6 +13,14 @@ const Component1 = () => {
     const [drugList, setDrugList] = useState([]);
     const [isValid, setISValid] = useState(true);
     const [errorData, setErrorData]=useState('');
+    const [data,setData]= useState([]);
+
+    useEffect(()=>{
+        if(localStorage.getItem('data')){
+            const newData = JSON.parse(localStorage.getItem('data'));
+            setData(newData);
+        }
+    },[])
 
     const handleLoginDetails = (event) => {
         event.preventDefault()
@@ -28,7 +36,24 @@ const Component1 = () => {
             drugs:drugList,
             dob:dob
         }
-        console.log(patientValue);
+        const newValue = data;
+        if(newValue.length>0){
+            newValue.forEach(items=>{
+                if(items.email!==patientValue.email){
+                    newValue.push(patientValue);
+                }
+            });
+        }else{
+            newValue.push(patientValue);
+        }
+        setData(newValue);
+        localStorage.setItem('data',JSON.stringify(newValue));
+        setName('');
+        setDrugList([]);
+        setEmail('');
+        setDob('');
+        setAddress('');
+        setPhone('');
     }
         else{
             setISValid(false);
@@ -80,7 +105,7 @@ const Component1 = () => {
     }
     return (
         
-           <div className="table">
+           <div className="table d-flex justify-content-center align-items-center flex-sm-column">
                 <div className="subhead">
                     <h3><strong>Add Patient</strong></h3>
                 </div> 

@@ -22,8 +22,10 @@
     position: absolute;
     left: 50%;
     top: 50%;
+    max-width: 500px !important;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    background-color:aqua;
 }
 
 .carousel-inner {
@@ -48,26 +50,23 @@
     text-align: center;
 }
 
-.login-sec .copy-text i {
-    color: #FEB58A;
-}
 
 .login-sec .copy-text a {
-    color: #E36262;
+    color: black;
 }
 
 .login-sec h2 {
     margin-bottom: 30px;
     font-weight: 800;
     font-size: 30px;
-    color: #DE6262;
+    color: black;
 }
 
 .login-sec h2:after {
     content: " ";
     width: 100px;
     height: 5px;
-    background: #FEB58A;
+    background: black;
     display: block;
     margin-top: 20px;
     border-radius: 3px;
@@ -76,7 +75,7 @@
 }
 
 .btn-login {
-    background: #DE6262;
+    background: black !important;
     color: #fff;
     font-weight: 600;
 }

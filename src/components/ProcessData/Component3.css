@@ -1,33 +1,42 @@
-.screen
+
+.heading
 {
     text-align: center;
 }
-.flex-container
+.content-view
 {
-    display: flex;
-    flex-direction: row;
+    background-color: lightcyan;
 }
-  
-  .first,.second,.third,.fourth {
-    background-color: #f1f1f1;
-    border: 1px solid gray;
-    text-align: center;
-    line-height: 75px;
-    font-size: 20px;
+.content
+{
+    line-height: 48px;
+    padding: 15px;
+    font-size:20px;
+}
+h1{
+    color: black;
     padding: 10px;
+    margin: 3px;
+}
+.table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100% !important;
+    margin: 0 !important;
   }
-  .Divum
-  {
-    text-align: center;
+  .btn-edit {
+    background: black !important;
+    color: #fff;
+    outline: none;
+}
+.thead{
     background-color: black;
-    line-height: 3.1;
-    color: white;
-  }
-  .divum-head
-  {
-    color: white;
-  }
-  .idea 
-  {
-    padding: 10px;
-  }
+    color: #fff;
+}
+.tbody{
+    background-color: aqua;
+}
+.section{
+    padding: 20px;
+    width: 100%;
+}

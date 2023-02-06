@@ -1,0 +1,8 @@
+.containers {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 14px 0 rgba(0, 0, 0, 0.14);
+  padding: 20px;
+  width: 600px !important;
+  background-color: aqua;
+}

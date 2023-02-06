@@ -1,9 +1,9 @@
 import React,{useState,useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
-import './editPatient.css';
+import { useLocation } from 'react-router-dom';
+import './editForm.css';
 
 const Component2 = () => {
-    const navigate = useNavigate();
+    const location=useLocation();
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
@@ -20,9 +20,13 @@ const Component2 = () => {
     const [data,setData]= useState([]);
 
     useEffect(()=>{
-        if(localStorage.getItem('data')){
-            const newData = JSON.parse(localStorage.getItem('data'));
-            setData(newData);
+        if(location.state.data){
+          const newData = location.state.data;
+          setName(newData.name)
+          setEmail(newData.email)
+          setDob(newData.dob)
+          setPhone(newData.phone)
+          setAddress(newData.address)
         }
     },[])
 
@@ -32,6 +36,15 @@ const Component2 = () => {
         const emailRegex = /^\S+@\S+$/;
         if(emailRegex.test(email) && phone.length===10){
             setISValid(true)
+            const patientValue={
+              name:name,
+              address:address,
+              phone:phone,
+              email:email,
+              drugs:location.state.data.drugs,
+              dob:dob
+          }
+          const newValue = localStorage.getItem('data');
         }
         else{
             setISValid(false)
@@ -80,59 +93,18 @@ const Component2 = () => {
             setPhone(value)
         }
     }
-    
-    const onEditIconClick =(item) => {
-        navigate('/editPatient',{state:{data:item}})
-    }
-
-    const renderTableData=()=>{
-        return data.map((items, index) => {
-           const { name, dob, email,phone,address } = items //destructuring
-           return (
-              <tr key={index}>
-                 <td>{index+1}</td>
-                 <td>{name}</td>
-                 <td>{email}</td>
-                 <td>{phone}</td>
-                 <td>{dob}</td>
-                 <td>{address}</td>
-                 <td><div className='d-flex'>
-                 <button type="button" className="btn btn-primary btn-edit" onClick={()=>onEditIconClick(items)}>Edit</button>
-                 <button type="button" className="btn btn-primary btn-edit">Delete</button>
-                    </div></td>
-              </tr>
-           )
-        })
-     }
 
     return (
            <div className="w-100">
                 <div className="subhead">
                     <h3><strong>Edit Patient</strong></h3>
                 </div> 
-                <div className='section'>
-                <table className="table table-bordered">
-                    <thead className='thead'>
-                        <tr>
-                        <th>Sl.No</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone No</th>
-                        <th>DOB</th>
-                        <th>Address</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody className='tbody'>
-                       {renderTableData()}
-                    </tbody>
-                </table>
-                </div>
-{/* <div className="containers">
+                <div className='d-flex justify-content-center align-items-center'>
+<div className="containers">
                 <form className="form d-flex flex-sm-column justify-content-center" onSubmit={handleLoginDetails}>
-                    <div className='grid justify-items-center align-items-center'>
-                                        <label htmlFor="Email" className="text-uppercase pl-2 d-flex justify-content-center">Email</label>
-                                    <div className="form-group p-1">
+                                        <label htmlFor="Email" className="text-uppercase pl-2">Email</label>
+                                        <div className = 'd-flex w-100 p-0'>
+                                    <div className="form-group p-1 w-75">
                                         <input type="email" name="email" className="form-control"
                                             value={email} placeholder="Enter the mail address" required
                                             onChange={handleUserInput} disabled={emailEdit}/>
@@ -179,7 +151,8 @@ const Component2 = () => {
                                         <button type="submit" className="btn btn-primary">Update</button>
                                     </div>
                                 </form>
-                                </div> */}
+                                </div>
+                                </div>
             </div>
 
 

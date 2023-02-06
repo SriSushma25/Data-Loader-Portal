@@ -38,7 +38,7 @@ function Dashboard(){
       
         <div className="d-flex" id="wrapper">
           <div id="page-content-wrapper">
-            <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom" id="nav-bar">
+            <nav className="navbar navbar-expand-lg navbar-light border-bottom header" id="nav-bar">
               <ul className='d-flex navData'>
               <li onClick={()=>menuClickHandler('component1')} name="component1" className={`list-style ${selectedComponent==='component1'?'highlight':''}`}>Add Patient</li>
               <li onClick={()=>menuClickHandler('component2')} name="component2" className={`list-style ${selectedComponent==='component2'?'highlight':''}`}>Edit Patient</li>
