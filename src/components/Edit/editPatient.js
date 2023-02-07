@@ -1,9 +1,7 @@
 import React,{useState,useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
 import './editPatient.css';
 
 const Component2 = () => {
-    const navigate = useNavigate();
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
@@ -14,24 +12,43 @@ const Component2 = () => {
     const [emailEdit, setEmailEdit] = useState(true);
     const [dobEdit, setDobEdit] = useState(true);
     const [addressEdit, setAddressEdit] = useState(true);
-    const [drugEdit, setDrugEdit] = useState(true);
-    const [drugListEdit, setDrugList] = useState([]);
     const [isValid, setISValid] = useState(true);
     const [data,setData]= useState([]);
+    const [onedit,setOnEdit] = useState(false);
+    const [editValue,setEditValue]= useState('')
 
     useEffect(()=>{
+        getData()
+    },[])
+
+    const getData=()=>{
         if(localStorage.getItem('data')){
-            const newData = JSON.parse(localStorage.getItem('data'));
+            let newData = JSON.parse(localStorage.getItem('data'));
+            newData = newData.filter(items=>items.status==='Inducted');
             setData(newData);
         }
-    },[])
+    }
 
     const handleLoginDetails = (event) => {
         event.preventDefault()
-        console.log(name,address)
         const emailRegex = /^\S+@\S+$/;
         if(emailRegex.test(email) && phone.length===10){
             setISValid(true)
+            const newValue = data;
+            newValue.map(items=>{
+                if(items.name===name){
+                    items.name=name;
+                    items.address=address;
+                    items.phone=phone;
+                    items.email=email;
+                    items.dob=dob;
+                }
+                return items;
+            });
+            setOnEdit(false);
+            localStorage.setItem('data',JSON.stringify(newValue));
+            getData();
+            setEditValue('');
         }
         else{
             setISValid(false)
@@ -81,40 +98,65 @@ const Component2 = () => {
         }
     }
     
-    const onEditIconClick =(item) => {
-        navigate('/editPatient',{state:{data:item}})
+    const onEditIconClick =(newData) => {
+        setName(newData.name)
+          setEmail(newData.email)
+          setDob(newData.dob)
+          setPhone(newData.phone)
+          setAddress(newData.address)
+       setOnEdit(true)
     }
 
     const renderTableData=()=>{
         return data.map((items, index) => {
-           const { name, dob, email,phone,address } = items //destructuring
+           const { name, dob, email,phone,address,status } = items; //destructuring
+           if(status==='Inducted'){
            return (
               <tr key={index}>
-                 <td>{index+1}</td>
                  <td>{name}</td>
                  <td>{email}</td>
                  <td>{phone}</td>
                  <td>{dob}</td>
                  <td>{address}</td>
-                 <td><div className='d-flex'>
+                 <td><div className='d-flex justify-content-center align-items-center'>
                  <button type="button" className="btn btn-primary btn-edit" onClick={()=>onEditIconClick(items)}>Edit</button>
-                 <button type="button" className="btn btn-primary btn-edit">Delete</button>
                     </div></td>
               </tr>
            )
+           }
+            return <tr className='text-center'>No Editable Data Found</tr>
         })
+     }
+
+     const onSelectName = e =>{
+        const value = e.target.value;
+        setEditValue(value)
+     }
+
+     const onEditButtonClick = () => {
+        const newData = data.find(items=>items.name===editValue);
+        onEditIconClick(newData)
      }
 
     return (
            <div className="w-100">
-                <div className="subhead">
-                    <h3><strong>Edit Patient</strong></h3>
-                </div> 
                 <div className='section'>
-                <table className="table table-bordered">
+                <div className="subhead">
+                    <h3 className='pb-3'><strong>Edit Patient</strong></h3>
+                </div> 
+                    {data&&data.length>0?<div className='select d-flex justify-content-between align-items-center'>
+                    <label for="selectName">Select Patient Name to Edit:</label>
+                    <select name="selectName" id="editPatient" onChange={(e)=>onSelectName(e)} placeholder='Select by name' value={editValue} className='selector'>
+                    <option value="" selected disabled hidden>Choose here</option>
+                        {data&&data.length>0&&data.map(items=>{
+                                return <option value={items.name}>{items.name}</option>
+                        })}
+                        </select>
+                        <button type="button" className="btn btn-primary btn-edit" onClick={onEditButtonClick}>Edit</button>
+                    </div>:<p className='text-center'>No Editable Data Found</p>}
+                {/* <table className="table table-bordered">
                     <thead className='thead'>
                         <tr>
-                        <th>Sl.No</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone No</th>
@@ -126,13 +168,13 @@ const Component2 = () => {
                     <tbody className='tbody'>
                        {renderTableData()}
                     </tbody>
-                </table>
-                </div>
-{/* <div className="containers">
+                </table> */}
+                {onedit&&<div className='d-flex justify-content-center align-items-center'>
+<div className="containers">
                 <form className="form d-flex flex-sm-column justify-content-center" onSubmit={handleLoginDetails}>
-                    <div className='grid justify-items-center align-items-center'>
-                                        <label htmlFor="Email" className="text-uppercase pl-2 d-flex justify-content-center">Email</label>
-                                    <div className="form-group p-1">
+                                        <label htmlFor="Email" className="text-uppercase pl-2">Email</label>
+                                        <div className = 'd-flex w-100 p-0'>
+                                    <div className="form-group p-1 w-75">
                                         <input type="email" name="email" className="form-control"
                                             value={email} placeholder="Enter the mail address" required
                                             onChange={handleUserInput} disabled={emailEdit}/>
@@ -179,7 +221,9 @@ const Component2 = () => {
                                         <button type="submit" className="btn btn-primary">Update</button>
                                     </div>
                                 </form>
-                                </div> */}
+                                </div>
+                                </div>}
+                </div>
             </div>
 
 

@@ -5,14 +5,31 @@ const Component3 = () => {
     const [data,setData]= useState([]);
 
     useEffect(()=>{
+        getData()
+    },[])
+
+    const getData = () => {
         if(localStorage.getItem('data')){
             const newData = JSON.parse(localStorage.getItem('data'));
             setData(newData);
         }
-    },[])
-    const renderTableData=()=>{
+    }
+
+    const onApprove = (items,val) => {
+        const newData = data;
+        newData.map(item=>{
+            if(item.name===items.name&&item.email===items.email){
+                item.status=val;
+            }
+            return item;
+        });
+        localStorage.setItem('data',JSON.stringify(newData));
+        getData();
+    }
+
+    const renderTableData=(data)=>{
         return data.map((items, index) => {
-           const { name, dob, email,phone,address } = items //destructuring
+           const { name, dob, email,phone,address,status } = items //destructuring
            return (
               <tr key={index}>
                  <td>{index+1}</td>
@@ -21,6 +38,12 @@ const Component3 = () => {
                  <td>{phone}</td>
                  <td>{dob}</td>
                  <td>{address}</td>
+                 <td>
+                    {status==='Inducted'?<div className='d-flex justify-content-center align-items-center'>
+                {status}
+                 <button type="button" className="btn btn-primary btn-edit" onClick={()=>onApprove(items,'Approved')}>Approve</button>
+                 <button type="button" className="btn btn-primary btn-edit" onClick={()=>onApprove(items,'Rejected')}>Reject</button>
+                    </div>:status}</td>
               </tr>
            )
         })
@@ -32,7 +55,7 @@ const Component3 = () => {
                     <h3><strong>Process Patient Data</strong></h3>
                 </div> 
                 <div className='section'>
-                <table className="table table-bordered">
+                {data&&data.length>0&& <table className="table table-bordered">
                     <thead className='thead'>
                         <tr>
                         <th>Sl.No</th>
@@ -41,12 +64,13 @@ const Component3 = () => {
                         <th>Phone No</th>
                         <th>DOB</th>
                         <th>Address</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody className='tbody'>
-                       {renderTableData()}
+                       {renderTableData(data)}
                     </tbody>
-                </table>
+                </table>}
                 </div>
                 </div>
       

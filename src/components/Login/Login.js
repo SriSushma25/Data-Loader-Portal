@@ -41,29 +41,35 @@ function Login() {
             <div className="frontpage">
                 <section className="login-block">
                     <div className="container">
-                            <div className="col-md-12 login-sec">
+                        <div className="row">
+                            <div className="col-md-8 banner-sec">
+                                <div id="carouselExampleIndicators" className="carousel slide" >
+                                </div>
+                            </div>
+                            <div className="col-md-4 login-sec">
                                 <h2 className="text-center">Data Loader Portal</h2>
                                 <form className="login-form" onSubmit={handleLoginDetails}>
                                     <div className="form-group p-1">
-                                        <label htmlFor="Email" className="">Name</label>
+                                        <label htmlFor="Email" className="text-uppercase">User Name</label>
                                         <input type="email" name="username" className="form-control"
                                             value={username} placeholder="Enter your user name" required
                                             onChange={handleUserInput} />
                                     </div>
                                     <div className="form-group p-1">
-                                        <label htmlFor="Password" className="">Password</label>
+                                        <label htmlFor="Password" className="text-uppercase">Password</label>
                                         <input type="password" name="password" className="form-control" value={password}
                                             placeholder="Enter your password" required
                                             onChange={handleUserInput} />
                                     </div>
                                     <div className="form-check p-1 text-center">
-                                        <button type="submit" className="btn btn-primary btn-login">Login</button>
+                                        <button type="submit" className="btn btn-primary">Login</button>
                                     </div>
                                 </form>
                                 <div role="alert" className="alert alert-danger alert-padding" hidden={isValid}>
                                     Invalid Username/Password.Please try again
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </section>
             </div>

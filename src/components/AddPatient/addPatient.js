@@ -34,20 +34,15 @@ const Component1 = () => {
             phone:phone,
             email:email,
             drugs:drugList,
-            dob:dob
+            dob:dob,
+            status:'Inducted'
         }
         const newValue = data;
-        if(newValue.length>0){
-            newValue.forEach(items=>{
-                if(items.email!==patientValue.email){
-                    newValue.push(patientValue);
-                }
-            });
-        }else{
             newValue.push(patientValue);
-        }
-        setData(newValue);
-        localStorage.setItem('data',JSON.stringify(newValue));
+            let valueData = newValue.filter((newValue, index, self) =>
+            index === self.findIndex((t) => (t.name === newValue.name && t.email === newValue.email)))
+        setData(valueData);
+        localStorage.setItem('data',JSON.stringify(valueData));
         setName('');
         setDrugList([]);
         setEmail('');
@@ -107,12 +102,12 @@ const Component1 = () => {
         
            <div className="table d-flex justify-content-center align-items-center flex-sm-column">
                 <div className="subhead">
-                    <h3><strong>Add Patient</strong></h3>
+                    <h3 className='pb-3 pt-3'><strong>Add Patient</strong></h3>
                 </div> 
 <div className="containers">
                 <form className="login-form" onSubmit={handleLoginDetails}>
                                     <div className="form-group p-1">
-                                    <div className="form-group p-1">
+                                    <div className="form-group p-1 pb-3">
                                         <label htmlFor="Email" className="text-uppercase pl-2">Email</label>
                                         <input type="email" name="email" className="form-control"
                                             value={email} placeholder="Enter the mail address" required
@@ -124,7 +119,7 @@ const Component1 = () => {
                                             value={name} placeholder="Enter your name" required
                                             onChange={handleUserInput} />
                                     </div>
-                                    <div className = 'd-flex w-100 p-0'> 
+                                    <div className = 'd-flex w-100 p-0 pb-2 pt-2'> 
                                     <div className="form-group p-1 w-50">
                                         <label htmlFor="Phone" className="text-uppercase pl-2">Phone</label>
                                         <input type="number" name="phone" className="form-control"
@@ -140,7 +135,7 @@ const Component1 = () => {
                                     </div>
                                     </div>
 
-                                    <div className="form-group p-1 ">
+                                    <div className="form-group p-1 pb-3 ">
                                         <label htmlFor="address" className="text-uppercase pl-2">Address</label>
                                         <textarea name="address" className="form-control" value={address}
                                             placeholder="Enter your address" required
@@ -168,7 +163,7 @@ const Component1 = () => {
                                          </div>
 
                                     <div className="form-check p-1 text-center">
-                                        <button type="submit" className="btn btn-primary">submit</button>
+                                        <button type="submit" className="btn btn-primary">Submit</button>
                                     </div>
                                 </form>
                                 </div>

@@ -28,14 +28,13 @@ h1{
     background: black !important;
     color: #fff;
     outline: none;
+    margin: 0 0px 0 10px;
 }
 .thead{
     background-color: black;
     color: #fff;
 }
-.tbody{
-    background-color: aqua;
-}
+
 .section{
     padding: 20px;
     width: 100%;

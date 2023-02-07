@@ -33,10 +33,12 @@ h1{
     background-color: black;
     color: #fff;
 }
-.tbody{
-    background-color: aqua;
+.select{
+    min-width: 30%;
+    max-width: 40%;
+    padding-bottom: 20px;
 }
-.section{
-    padding: 20px;
-    width: 100%;
+.selector {
+    padding: 5px 10px;
+    border-radius: 6px;
 }
