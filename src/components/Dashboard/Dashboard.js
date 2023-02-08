@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { useLocation,Link } from 'react-router-dom';
 import Component1 from '../AddPatient/addPatient';
 import Component2 from '../Edit/editPatient';
-import Component3 from '../ProcessData/Component3';
+import Component3 from '../ProcessData/processData';
 import './Dashboard.css';
 
 
@@ -19,7 +19,7 @@ function Dashboard(){
   }
   useEffect(()=>{ 
    setCurrentUser(location.state.userName);
-  },[]);
+  },[location.state.userName]);
 
   const getCurrentState=(selectedComponent)=> {
     const currentComponent = {
@@ -39,6 +39,7 @@ function Dashboard(){
         <div className="d-flex" id="wrapper">
           <div id="page-content-wrapper">
             <nav className="navbar navbar-expand-lg navbar-light border-bottom header" id="nav-bar">
+              <h5>Data Loader Portal</h5>
               <ul className='d-flex navData'>
               <li onClick={()=>menuClickHandler('component1')} name="component1" className={`list-style ${selectedComponent==='component1'?'highlight':''}`}>Add Patient</li>
               <li onClick={()=>menuClickHandler('component2')} name="component2" className={`list-style ${selectedComponent==='component2'?'highlight':''}`}>Edit Patient</li>
@@ -60,7 +61,7 @@ function Dashboard(){
               </div>
               </div>
             </nav>
-            <div className="container-fluid">
+            <div className="container-fluid background">
               {getCurrentState(selectedComponent)}
             </div>
           </div>

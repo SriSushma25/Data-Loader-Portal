@@ -35,10 +35,20 @@ h1{
 }
 .select{
     min-width: 30%;
-    max-width: 40%;
+    max-width: 50%;
     padding-bottom: 20px;
 }
 .selector {
     padding: 5px 10px;
     border-radius: 6px;
+}
+.tbody{
+    background-color: white;
+}
+.trData{
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }

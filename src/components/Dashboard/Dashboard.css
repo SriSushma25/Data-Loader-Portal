@@ -7,6 +7,9 @@
     transition: margin .25s ease-out;
     
   }
+  .dropdown-menu-right{
+    right: 0;
+  }
   
   #sidebar-wrapper  {
     padding: 0.875rem 1.25rem;
@@ -52,8 +55,10 @@
     #nav-bar{
       width: 100%;
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
+      padding-left:10px;
+      padding-right:10px;
     }
  
   .list-style{

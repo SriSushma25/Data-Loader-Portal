@@ -16,6 +16,9 @@ const Component2 = () => {
     const [data,setData]= useState([]);
     const [onedit,setOnEdit] = useState(false);
     const [editValue,setEditValue]= useState('')
+    const [filterData,setFilterData]=useState('');
+    const [editShow,setEditShow]= useState(false);
+    const [errorData, setErrorData]=useState('');
 
     useEffect(()=>{
         getData()
@@ -24,7 +27,6 @@ const Component2 = () => {
     const getData=()=>{
         if(localStorage.getItem('data')){
             let newData = JSON.parse(localStorage.getItem('data'));
-            newData = newData.filter(items=>items.status==='Inducted');
             setData(newData);
         }
     }
@@ -48,10 +50,19 @@ const Component2 = () => {
             setOnEdit(false);
             localStorage.setItem('data',JSON.stringify(newValue));
             getData();
-            setEditValue('');
+            
         }
         else{
-            setISValid(false)
+            setISValid(false);
+            if(!emailRegex.test(email) && phone.length!==10){
+                setErrorData('Invalid Email id and Phone no !!');
+            }
+            else if(!emailRegex.test(email)){
+                setErrorData('Invalid email id,Please enter a valid mail id')
+            }
+            else if(phone.length!==10){
+                setErrorData('Invalid phone number!!Please enter a valid phone no')
+            }
         }
         
 
@@ -108,9 +119,8 @@ const Component2 = () => {
     }
 
     const renderTableData=()=>{
-        return data.map((items, index) => {
+        return filterData.map((items, index) => {
            const { name, dob, email,phone,address,status } = items; //destructuring
-           if(status==='Inducted'){
            return (
               <tr key={index}>
                  <td>{name}</td>
@@ -118,24 +128,24 @@ const Component2 = () => {
                  <td>{phone}</td>
                  <td>{dob}</td>
                  <td>{address}</td>
+                 <td>{status}</td>
                  <td><div className='d-flex justify-content-center align-items-center'>
                  <button type="button" className="btn btn-primary btn-edit" onClick={()=>onEditIconClick(items)}>Edit</button>
                     </div></td>
               </tr>
            )
-           }
-            return <tr className='text-center'>No Editable Data Found</tr>
         })
      }
 
      const onSelectName = e =>{
         const value = e.target.value;
-        setEditValue(value)
+        setEditValue(value);
      }
 
      const onEditButtonClick = () => {
-        const newData = data.find(items=>items.name===editValue);
-        onEditIconClick(newData)
+        setEditShow(true);
+        const newData = data.filter(items=>items.name.includes(editValue));
+        setFilterData(newData);
      }
 
     return (
@@ -144,17 +154,19 @@ const Component2 = () => {
                 <div className="subhead">
                     <h3 className='pb-3'><strong>Edit Patient</strong></h3>
                 </div> 
-                    {data&&data.length>0?<div className='select d-flex justify-content-between align-items-center'>
-                    <label for="selectName">Select Patient Name to Edit:</label>
-                    <select name="selectName" id="editPatient" onChange={(e)=>onSelectName(e)} placeholder='Select by name' value={editValue} className='selector'>
+                    <div className='select d-flex justify-content-between align-items-center'>
+                    <input type="text" name="selectName" className="form-control"
+                                            value={editValue} placeholder="Search by Patient name"
+                                            onChange={(e)=>onSelectName(e)} />
+                    {/* <select name="selectName" id="editPatient" onChange={(e)=>onSelectName(e)} placeholder='Select by name' value={editValue} className='selector'>
                     <option value="" selected disabled hidden>Choose here</option>
                         {data&&data.length>0&&data.map(items=>{
                                 return <option value={items.name}>{items.name}</option>
                         })}
-                        </select>
-                        <button type="button" className="btn btn-primary btn-edit" onClick={onEditButtonClick}>Edit</button>
-                    </div>:<p className='text-center'>No Editable Data Found</p>}
-                {/* <table className="table table-bordered">
+                        </select> */}
+                        <button type="button" className="btn btn-primary btn-edit" onClick={onEditButtonClick}>Search</button>
+                    </div>
+                {editShow&&<table className="table table-bordered">
                     <thead className='thead'>
                         <tr>
                         <th>Name</th>
@@ -162,15 +174,19 @@ const Component2 = () => {
                         <th>Phone No</th>
                         <th>DOB</th>
                         <th>Address</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody className='tbody'>
-                       {renderTableData()}
+                       {filterData&& filterData.length>0 ?renderTableData():<tr className='text-center w-100 p-1'>No Editable Data Found</tr>}
                     </tbody>
-                </table> */}
-                {onedit&&<div className='d-flex justify-content-center align-items-center'>
+                </table>}
+                {onedit&&<div className='d-flex justify-content-center align-items-center pt-2'>
 <div className="containers">
+<div role="alert" className="alert alert-danger" hidden={isValid}>
+                                    {errorData}
+                                </div>
                 <form className="form d-flex flex-sm-column justify-content-center" onSubmit={handleLoginDetails}>
                                         <label htmlFor="Email" className="text-uppercase pl-2">Email</label>
                                         <div className = 'd-flex w-100 p-0'>

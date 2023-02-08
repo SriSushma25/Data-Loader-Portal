@@ -53,13 +53,13 @@ const Component1 = () => {
         else{
             setISValid(false);
             if(!emailRegex.test(email) && phone.length!==10){
-                alert('Invalid email id and phone no');
+                setErrorData('Invalid Email id and Phone no !!');
             }
             else if(!emailRegex.test(email)){
-               alert('Invalid email id,please enter a valid mail id')
+                setErrorData('Invalid email id,Please enter a valid mail id')
             }
             else if(phone.length!==10){
-                alert('Invalid phone no,please enter a valid phone no')
+                setErrorData('Invalid phone number!!Please enter a valid phone no')
             }
         }
         
@@ -100,11 +100,14 @@ const Component1 = () => {
     }
     return (
         
-           <div className="table d-flex justify-content-center align-items-center flex-sm-column">
+           <div className="d-flex justify-content-center align-items-center flex-sm-column">
                 <div className="subhead">
                     <h3 className='pb-3 pt-3'><strong>Add Patient</strong></h3>
                 </div> 
 <div className="containers">
+<div role="alert" className="alert alert-danger" hidden={isValid}>
+                                    {errorData}
+                                </div>
                 <form className="login-form" onSubmit={handleLoginDetails}>
                                     <div className="form-group p-1">
                                     <div className="form-group p-1 pb-3">

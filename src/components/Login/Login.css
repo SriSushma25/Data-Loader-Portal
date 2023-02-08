@@ -109,3 +109,7 @@
 .alert-padding{
     margin-top: 75px;
 }
+.background1{
+    background: url('../Dashboard/images.jpg') no-repeat;
+    height: 100vh;
+  }

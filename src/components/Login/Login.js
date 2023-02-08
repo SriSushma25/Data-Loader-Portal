@@ -38,7 +38,7 @@ function Login() {
     }
     return (
         <React.Fragment>
-            <div className="frontpage">
+            <div className="frontpage background1">
                 <section className="login-block">
                     <div className="container">
                         <div className="row">
