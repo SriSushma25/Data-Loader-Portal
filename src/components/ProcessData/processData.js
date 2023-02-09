@@ -6,6 +6,7 @@ const Component3 = () => {
     const [editValue,setEditValue]= useState('')
     const [filterData,setFilterData]=useState('');
     const [editShow,setEditShow]= useState(false);
+    const [toast, setToast] = useState('');
 
     useEffect(()=>{
         getData()
@@ -27,6 +28,8 @@ const Component3 = () => {
             return item;
         });
         localStorage.setItem('data',JSON.stringify(newData));
+        setToast(val);
+        setTimeout(()=>{setToast('');}, 3000);
         getData();
     }
 
@@ -93,6 +96,7 @@ const Component3 = () => {
                     </tbody>
                 </table>}
                 </div>
+                <div id="snackbar" className={toast!==''?'show':''}>{toast} Successfully</div>
                 </div>
       
     );
