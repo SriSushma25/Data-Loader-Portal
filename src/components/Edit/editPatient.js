@@ -19,6 +19,7 @@ const Component2 = () => {
     const [filterData,setFilterData]=useState('');
     const [editShow,setEditShow]= useState(false);
     const [errorData, setErrorData]=useState('');
+    const [toast, setToast] = useState(false);
 
     useEffect(()=>{
         getData()
@@ -49,6 +50,8 @@ const Component2 = () => {
             });
             setOnEdit(false);
             localStorage.setItem('data',JSON.stringify(newValue));
+            setToast(true);
+        setTimeout(()=>{setToast(false);}, 3000);
             getData();
             
         }
@@ -218,7 +221,7 @@ const Component2 = () => {
                                         <label htmlFor="Dob" className="text-uppercase pl-2">DOB</label>
                                         <input type="date" name="dob" className="form-control"
                                             value={dob} placeholder="dob" required
-                                            onChange={handleUserInput} disabled={dobEdit}/>
+                                            onChange={handleUserInput} disabled={dobEdit} max={new Date().toISOString().split("T")[0]}/>
                                     </div>
                                     <button className='btn btn-primary pt-1 pb-1 pl-4 pr-4 m-1' type="button" onClick={()=>onEditClick('dob')} disabled={!dobEdit}>Edit</button>
                                     </div>
@@ -238,6 +241,7 @@ const Component2 = () => {
                                     </div>
                                 </form>
                                 </div>
+                                <div id="snackbar" className={toast?'show':''}>Patient Edited Successfully</div>
                                 </div>}
                 </div>
             </div>

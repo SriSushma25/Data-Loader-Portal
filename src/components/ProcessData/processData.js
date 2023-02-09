@@ -31,7 +31,7 @@ const Component3 = () => {
     }
 
     const renderTableData=(data)=>{
-        return data.map((items, index) => {
+        return filterData.map((items, index) => {
            const { name, dob, email,phone,address,status } = items //destructuring
            return (
               <tr key={index}>

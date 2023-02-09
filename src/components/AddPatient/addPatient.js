@@ -12,6 +12,7 @@ const Component1 = () => {
     const [drug, setDrug] = useState('');
     const [drugList, setDrugList] = useState([]);
     const [isValid, setISValid] = useState(true);
+    const [toast, setToast] = useState(false);
     const [errorData, setErrorData]=useState('');
     const [data,setData]= useState([]);
 
@@ -43,6 +44,9 @@ const Component1 = () => {
             index === self.findIndex((t) => (t.name === newValue.name && t.email === newValue.email)))
         setData(valueData);
         localStorage.setItem('data',JSON.stringify(valueData));
+        setToast(true);
+        setTimeout(()=>{setToast(false);}, 3000);
+
         setName('');
         setDrugList([]);
         setEmail('');
@@ -134,7 +138,7 @@ const Component1 = () => {
                                         <label htmlFor="Dob" className="text-uppercase pl-2">DOB</label>
                                         <input type="date" name="dob" className="form-control"
                                             value={dob} placeholder="dob" required
-                                            onChange={handleUserInput} />
+                                            onChange={handleUserInput} max={new Date().toISOString().split("T")[0]}/>
                                     </div>
                                     </div>
 
@@ -169,6 +173,7 @@ const Component1 = () => {
                                         <button type="submit" className="btn btn-primary">Submit</button>
                                     </div>
                                 </form>
+                                <div id="snackbar" className={toast?'show':''}>Patient Added Successfully</div>
                                 </div>
             </div>
 
