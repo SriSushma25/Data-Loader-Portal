@@ -160,7 +160,7 @@ const Component2 = () => {
      const onEditButtonClick = () => {
         if(editValue.length>0){
         setEditShow(true);
-        const newData = data.filter(items=>items.name.includes(editValue));
+        const newData = data.filter(items=>items.name.includes(editValue)&&items.status==='Inducted');
         setFilterData(newData);
         }else{
             setFilterData([])
