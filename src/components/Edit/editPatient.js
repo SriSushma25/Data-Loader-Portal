@@ -209,7 +209,7 @@ const Component2 = () => {
                                         <div className = 'd-flex w-100 p-0'>
                                     <div className="form-group p-1 w-75">
                                         <input type="email" name="email" className="form-control"
-                                            value={email} placeholder="Enter the mail address" required
+                                            value={email} placeholder="Enter the mail address" 
                                             onChange={handleUserInput} disabled={emailEdit}/>
                                             <p className="alert-danger m-0 " hidden={isEmailValid}>Invalid email id!!Please enter a valid email id</p>
                                             </div>
@@ -219,7 +219,7 @@ const Component2 = () => {
                                     <div className = 'd-flex w-100 p-0'>
                                     <div className="form-group p-1 w-75">
                                         <input type="text" name="name" className="form-control"
-                                            value={name} placeholder="Enter your name" required
+                                            value={name} placeholder="Enter your name" 
                                             onChange={handleUserInput} disabled={nameEdit}/>
                                             <p className="alert-danger m-0 " hidden={isNameValid}>Invalid name!!Please enter patient name</p>
                                             </div></div>
@@ -227,7 +227,7 @@ const Component2 = () => {
                                     <div className = 'd-flex w-100 p-0'> 
                                     <div className="form-group p-1 w-75">
                                         <input type="number" name="phone" className="form-control"
-                                            value={phone} placeholder="mobile number" required
+                                            value={phone} placeholder="mobile number" 
                                             onChange={handleUserInput} disabled={phoneEdit}/>
                                             <p className="alert-danger m-0 " hidden={isPhoneValid}>Invalid phone number!!Please enter a valid phone no</p>
                                     </div>
@@ -237,7 +237,7 @@ const Component2 = () => {
                                     <div className="form-group p-1 w-75">
                                         <label htmlFor="Dob" className="text-uppercase pl-2">DOB</label>
                                         <input type="date" name="dob" className="form-control"
-                                            value={dob} placeholder="dob" required
+                                            value={dob} placeholder="dob" 
                                             onChange={handleUserInput} disabled={dobEdit} max={new Date().toISOString().split("T")[0]}/>
                                             <p className="alert-danger m-0 " hidden={isDobValid}>Invalid date!!Please enter a valid date</p>
                                     </div>
@@ -248,7 +248,7 @@ const Component2 = () => {
                                         <div className = 'd-flex w-100 p-0'> 
                                     <div className="form-group p-1 w-75">
                                         <textarea name="address" className="form-control" value={address}
-                                            placeholder="Enter your address" required
+                                            placeholder="Enter your address" 
                                             onChange={handleUserInput} disabled={addressEdit}/>
                                             <p className="alert-danger m-0 " hidden={isAddressValid}>Invalid address!!Please enter a valid address</p>
                                     </div>
