@@ -12,14 +12,17 @@ const Component2 = () => {
     const [emailEdit, setEmailEdit] = useState(true);
     const [dobEdit, setDobEdit] = useState(true);
     const [addressEdit, setAddressEdit] = useState(true);
-    const [isValid, setISValid] = useState(true);
     const [data,setData]= useState([]);
     const [onedit,setOnEdit] = useState(false);
     const [editValue,setEditValue]= useState('')
     const [filterData,setFilterData]=useState('');
     const [editShow,setEditShow]= useState(false);
-    const [errorData, setErrorData]=useState('');
     const [toast, setToast] = useState(false);
+    const [isEmailValid, setIsEmailValid] = useState(true);
+    const [isNameValid, setIsNameValid] = useState(true);
+    const [isPhoneValid, setIsPhoneValid] = useState(true);
+    const [isDobValid, setIsDobValid] = useState(true);
+    const [isAddressValid, setIsAddressValid] = useState(true);
 
     useEffect(()=>{
         getData()
@@ -34,9 +37,13 @@ const Component2 = () => {
 
     const handleLoginDetails = (event) => {
         event.preventDefault()
+        setIsAddressValid(true);
+        setIsNameValid(true);
+        setIsDobValid(true);
+        setIsEmailValid(true);
+        setIsPhoneValid(true);
         const emailRegex = /^\S+@\S+$/;
-        if(emailRegex.test(email) && phone.length===10){
-            setISValid(true)
+        if(emailRegex.test(email) && phone.length===10&& name.length>0&&dob.length>0&&address.length>0){
             const newValue = data;
             newValue.map(items=>{
                 if(items.name===name){
@@ -56,15 +63,20 @@ const Component2 = () => {
             
         }
         else{
-            setISValid(false);
-            if(!emailRegex.test(email) && phone.length!==10){
-                setErrorData('Invalid Email id and Phone no !!');
+            if(!emailRegex.test(email)||email.length===0){
+                setIsEmailValid(false);
             }
-            else if(!emailRegex.test(email)){
-                setErrorData('Invalid email id,Please enter a valid mail id')
+            if(name.length===0){
+                setIsNameValid(false);
             }
-            else if(phone.length!==10){
-                setErrorData('Invalid phone number!!Please enter a valid phone no')
+            if(address.length===0){
+                setIsAddressValid(false);
+            }
+            if(dob.length===0){
+                setIsDobValid(false);
+            }
+            if(phone.length!==10){
+                setIsPhoneValid(false);
             }
         }
         
@@ -146,9 +158,14 @@ const Component2 = () => {
      }
 
      const onEditButtonClick = () => {
+        if(editValue.length>0){
         setEditShow(true);
         const newData = data.filter(items=>items.name.includes(editValue));
         setFilterData(newData);
+        }else{
+            setFilterData([])
+            setEditShow(false);
+        }
      }
 
     return (
@@ -187,9 +204,6 @@ const Component2 = () => {
                 </table>}
                 {onedit&&<div className='d-flex justify-content-center align-items-center pt-2'>
 <div className="containers">
-<div role="alert" className="alert alert-danger" hidden={isValid}>
-                                    {errorData}
-                                </div>
                 <form className="form d-flex flex-sm-column justify-content-center" onSubmit={handleLoginDetails}>
                                         <label htmlFor="Email" className="text-uppercase pl-2">Email</label>
                                         <div className = 'd-flex w-100 p-0'>
@@ -197,6 +211,7 @@ const Component2 = () => {
                                         <input type="email" name="email" className="form-control"
                                             value={email} placeholder="Enter the mail address" required
                                             onChange={handleUserInput} disabled={emailEdit}/>
+                                            <p className="alert-danger m-0 " hidden={isEmailValid}>Invalid email id!!Please enter a valid email id</p>
                                             </div>
                                         <button className='btn btn-primary pt-1 pb-1 pl-4 pr-4 m-1' type="button" onClick={()=>onEditClick('email')} disabled={!emailEdit}>Edit</button>
                                     </div>
@@ -206,6 +221,7 @@ const Component2 = () => {
                                         <input type="text" name="name" className="form-control"
                                             value={name} placeholder="Enter your name" required
                                             onChange={handleUserInput} disabled={nameEdit}/>
+                                            <p className="alert-danger m-0 " hidden={isNameValid}>Invalid name!!Please enter patient name</p>
                                             </div></div>
                                         <label htmlFor="Phone" className="text-uppercase pl-2">Phone</label>
                                     <div className = 'd-flex w-100 p-0'> 
@@ -213,6 +229,7 @@ const Component2 = () => {
                                         <input type="number" name="phone" className="form-control"
                                             value={phone} placeholder="mobile number" required
                                             onChange={handleUserInput} disabled={phoneEdit}/>
+                                            <p className="alert-danger m-0 " hidden={isPhoneValid}>Invalid phone number!!Please enter a valid phone no</p>
                                     </div>
                                     <button className='btn btn-primary pt-1 pb-1 pl-4 pr-4 m-1' type="button" onClick={()=>onEditClick('phone')} disabled={!phoneEdit}>Edit</button>
                                     </div>
@@ -222,6 +239,7 @@ const Component2 = () => {
                                         <input type="date" name="dob" className="form-control"
                                             value={dob} placeholder="dob" required
                                             onChange={handleUserInput} disabled={dobEdit} max={new Date().toISOString().split("T")[0]}/>
+                                            <p className="alert-danger m-0 " hidden={isDobValid}>Invalid date!!Please enter a valid date</p>
                                     </div>
                                     <button className='btn btn-primary pt-1 pb-1 pl-4 pr-4 m-1' type="button" onClick={()=>onEditClick('dob')} disabled={!dobEdit}>Edit</button>
                                     </div>
@@ -232,6 +250,7 @@ const Component2 = () => {
                                         <textarea name="address" className="form-control" value={address}
                                             placeholder="Enter your address" required
                                             onChange={handleUserInput} disabled={addressEdit}/>
+                                            <p className="alert-danger m-0 " hidden={isAddressValid}>Invalid address!!Please enter a valid address</p>
                                     </div>
                                     <button className='btn btn-primary pt-1 pb-1 pl-4 pr-4 m-1' type="button" onClick={()=>onEditClick('address')} disabled={!addressEdit}>Edit</button>
                                     </div>
@@ -245,8 +264,6 @@ const Component2 = () => {
                                 </div>}
                 </div>
             </div>
-
-
         
     );
 }

@@ -33,7 +33,7 @@ const Component3 = () => {
         getData();
     }
 
-    const renderTableData=(data)=>{
+    const renderTableData=()=>{
         return filterData.map((items, index) => {
            const { name, dob, email,phone,address,status } = items //destructuring
            return (
@@ -45,11 +45,11 @@ const Component3 = () => {
                  <td>{dob}</td>
                  <td>{address}</td>
                  <td>
-                    {status}</td>
-                    <td>{status==='Inducted'&&<div className='d-flex justify-content-center align-items-center'>
+                    {status==='Inducted'?<div className='d-flex justify-content-center align-items-center'>
+                    {status}
                  <button type="button" className="btn btn-primary btn-edit" onClick={()=>onApprove(items,'Approved')}>Approve</button>
                  <button type="button" className="btn btn-primary btn-edit" onClick={()=>onApprove(items,'Rejected')}>Reject</button>
-                    </div>}</td>
+                    </div>:status}</td>
               </tr>
            )
         })
@@ -61,9 +61,15 @@ const Component3 = () => {
      }
 
      const onSearch = () => {
+        if(editValue.length>0){
         setEditShow(true);
         const newData = data.filter(items=>items.name.includes(editValue));
         setFilterData(newData);
+        }
+        else{
+            setFilterData([])
+            setEditShow(false);
+        }
      }
 
     return (
@@ -88,11 +94,10 @@ const Component3 = () => {
                         <th>DOB</th>
                         <th>Address</th>
                         <th>Status</th>
-                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody className='tbody'>
-                       {filterData&&filterData.length>0?renderTableData(data):<tr className='text-center w-100'>No records found</tr>}
+                       {filterData&&filterData.length>0?renderTableData():<tr className='text-center w-100'>No records found</tr>}
                     </tbody>
                 </table>}
                 </div>

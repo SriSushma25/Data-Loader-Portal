@@ -1,15 +1,12 @@
 import React, { useState,useEffect } from 'react';
-import { useLocation,Link } from 'react-router-dom';
-import Component1 from '../AddPatient/addPatient';
-import Component2 from '../Edit/editPatient';
-import Component3 from '../ProcessData/processData';
+import { Link, useNavigate, Outlet } from 'react-router-dom';
 import './Dashboard.css';
 
 
 function Dashboard(){
-  const location =useLocation();
+  const navigate = useNavigate();
   const [currentUser,setCurrentUser] =useState('');
-  const [selectedComponent,setSelectedComponent]= useState('component');
+  const [selectedComponent,setSelectedComponent]= useState('');
 
   const toggleDropdownHandler = (event) => {
     if (event.target.nextElementSibling !== null) {
@@ -18,20 +15,17 @@ function Dashboard(){
     }
   }
   useEffect(()=>{ 
-   setCurrentUser(location.state.userName);
-  },[location.state.userName]);
+    if(localStorage.getItem('userName')){
+      setCurrentUser(localStorage.getItem('userName'));
+    }
+    else{
+      navigate('/');
+    }
+  },[currentUser, navigate]);
 
-  const getCurrentState=(selectedComponent)=> {
-    const currentComponent = {
-      component1: <Component1 />,
-      component2: <Component2 />,
-      component3: <Component3 />,
-      component:''
-    };
-    return currentComponent[selectedComponent];
-  }
   const menuClickHandler = (name) => {
-    setSelectedComponent(name);
+    setSelectedComponent(name)
+    navigate(`/dashboard/${name}`);
   }
 
     return (
@@ -41,9 +35,9 @@ function Dashboard(){
             <nav className="navbar navbar-expand-lg navbar-light border-bottom header" id="nav-bar">
               <h5>Data Loader Portal</h5>
               <ul className='d-flex navData'>
-              <li onClick={()=>menuClickHandler('component1')} name="component1" className={`list-style ${selectedComponent==='component1'?'highlight':''}`}>Add Patient</li>
-              <li onClick={()=>menuClickHandler('component2')} name="component2" className={`list-style ${selectedComponent==='component2'?'highlight':''}`}>Edit Patient</li>
-              <li onClick={()=>menuClickHandler('component3')} name="component3" className={`list-style ${selectedComponent==='component3'?'highlight':''}`}>Process Data</li>
+              <li onClick={()=>menuClickHandler('addPatient')} name="component1" className={`list-style ${selectedComponent==='addPatient'?'highlight':''}`}>Add Patient</li>
+              <li onClick={()=>menuClickHandler('editPatient')} name="component2" className={`list-style ${selectedComponent==='editPatient'?'highlight':''}`}>Edit Patient</li>
+              <li onClick={()=>menuClickHandler('processPatient')} name="component3" className={`list-style ${selectedComponent==='processPatient'?'highlight':''}`}>Process Data</li>
               </ul>
               <div>
               <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" >
@@ -54,7 +48,7 @@ function Dashboard(){
                   <li className="nav-item dropdown">
                     <div className="nav-link dropdown-toggle" role="button" data-toggle="dropdown" >{currentUser}</div>
                     <div className="dropdown-menu dropdown-menu-right" >
-                      <Link to="/" className="dropdown-item">Logout</Link>
+                      <Link to="/" className="dropdown-item" onClick={()=>localStorage.removeItem('userName')}>Logout</Link>
                     </div>
                   </li>
                 </ul>
@@ -62,7 +56,7 @@ function Dashboard(){
               </div>
             </nav>
             <div className="container-fluid background">
-              {getCurrentState(selectedComponent)}
+              <Outlet />
             </div>
           </div>
         </div>

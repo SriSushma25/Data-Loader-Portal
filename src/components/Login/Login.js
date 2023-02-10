@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
@@ -7,6 +7,12 @@ function Login() {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [isValid, setISValid] = useState(true);
+
+    useEffect(()=>{
+        if(localStorage.getItem('userName')){
+            navigate('/dashboard');
+        }
+    },[navigate])
 
     const handleUserInput = (event) => {
         const value = event.target.value;
@@ -27,10 +33,8 @@ function Login() {
         if (emailRegex.test(username) && passwordRegex.test(password)) 
         {
             setISValid(true);
-            navigate('/dashboard',
-                {
-                    state: { userName: username }
-                })
+            localStorage.setItem('userName',username);
+            navigate('/dashboard')
         } 
         else {
             setISValid(false);

@@ -55,4 +55,6 @@ table {
   to {bottom: 0; opacity: 0;}
 }
   
-  
+.alert-danger{
+  color: red !important;
+}
